@@ -1,0 +1,287 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Biblioteca",
+        "description": "Sistema de gerenciamento de biblioteca API REST FULL.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers":[
+        {
+            "url": "/"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Obras",
+            "description": "API para obras na biblioteca."
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/obras":{
+            "post":{
+                "tags": [
+                  "Obras"  
+                ],
+                "summary": "Cria uma nova obra.",
+                "requestBody": {
+                    "description": "Obra Objeto",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/create"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Retorna a obra criada.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/obras/": {
+            "get":{
+                "tags": [
+                    "Obras"
+                ],
+                "summary": "Exibe todas as obras cadastradas.",
+                "responses": {
+                    "200":{
+                        "description": "Retorna lista de obras",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "$ref": "#/definitions/obras"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Requisição inválida.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/obras/{id}":{
+            "put":{
+                "tags": [
+                    "Obras"
+                ],
+                "summary": "Atualiza parcialmente a obra.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Insira o id da obra.",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Obras Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/create"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Retorna a obra atualizada.",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/definitions/object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requisição inválida.",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/definitions/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/obras/delete/{id}":{
+            "delete":{
+                "tags": [
+                    "Obras"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Insira o id da obra.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "summary": "Deleta a obra.",
+                "responses": {
+                    "200":{
+                        "description": "Retorna o sucesso da requisição.",
+                        "content": {
+                            "application/json": {
+                                "schema":{
+                                    "$ref": "#/definitions/success"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Requisição inválida.",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "$ref": "#/definitions/error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "id": {
+            "properties": {
+                "id":{
+                    "type":"string"
+                }
+            }
+        },
+        "create": {
+            "type": "object",
+            "properties": {
+                "titulo": {
+                    "type": "string"
+                },
+                "editora": {
+                    "type": "string"
+                },
+                "foto": {
+                    "type": "string"
+                },
+                "autores": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "obras": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "titulo": {
+                        "type": "string"
+                    },
+                    "editora": {
+                        "type": "string"
+                    },
+                    "aurotes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "object": {
+            "type": "object",
+            "properties": {
+                "id":{
+                    "type": "string"
+                },
+                "titulo": {
+                    "type": "string"
+                },
+                "editora": {
+                    "type": "string"
+                },
+                "foto": {
+                    "type": "string"
+                },
+                "autores": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "error": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "success": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
